@@ -17,9 +17,11 @@ class Star {
     vector<Node> sums;
     vector<string>seq;
     int f = 0, c = 0;
+
+    void readStrings(ReadMode rm, string file);
     void buildMatrix();
+    void printMatrix();
     unsigned int findRootAlignmentIndex();
-    vector<string> readStrings(ReadMode rm, string file);
 
 };
 

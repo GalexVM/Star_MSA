@@ -1,6 +1,6 @@
 #include "Star.h"
 
-vector<string> Star::readStrings(ReadMode rm, string file){ //Reads and saves
+void Star::readStrings(ReadMode rm, string file){ //Reads and saves
     std::ifstream input(file);
     vector<string> cadenas;
     if(!input.is_open()) cout << "Error al abrir el archivo de input Star\n";
@@ -42,6 +42,34 @@ vector<string> Star::readStrings(ReadMode rm, string file){ //Reads and saves
         c = f = (int)cadenas.size();
         matrix = vector<Node>(c * f);
         sums = vector<Node>(c);
+        seq = std::move(cadenas);
     }
-    return cadenas;
+}
+void Star::buildMatrix(){
+    Needleman_W nw(1,-2,-1);
+    for(auto i = 0; i < f; i++){
+        for(auto j = 0; j < c; j++){
+            Node* currentNode = &(matrix[c*i+j]);
+            if(j == i){
+                currentNode->alg = alignment();
+                currentNode->value = 0;
+            }
+            else if(j > i){
+                currentNode->alg = nw.calculate(seq[i],seq[j]);
+                currentNode->value = nw.lastScore;
+            }
+            else{
+                currentNode->alg = matrix[c*j+i].alg;
+                currentNode->value =  matrix[c*j+i].value;
+            }
+
+        }
+    }
+}
+void Star::printMatrix(){
+    for(auto i = 0; i < f; i++){
+        for(auto j = 0; j < c; j++){
+            cout << matrix[c*i+j].value << "\t";
+        }cout << "\n";
+    }cout << "\n";
 }

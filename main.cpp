@@ -9,8 +9,8 @@ int main() {
     cout << "score: " << NW_alg.lastScore << std::endl;
 
     Star star;
-    vector<string> cadenas = star.readStrings(forward, "../inputStar.txt");
-    for(auto a : cadenas){
-        cout<< a<<"\n";
-    }
+    star.readStrings(forward, "../inputStar.txt");
+    star.buildMatrix();
+    star.printMatrix();
+
 }
