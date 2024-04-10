@@ -30,7 +30,8 @@ public:
     int lastScore = 0;
     int match = 1, indel = -2, mismatch = -1;
     Needleman_W(int m, int ind, int misma) :match(m), indel(ind), mismatch(misma) {}
-    void calculate(string c1, string c2);
+    alignment calculate(string c1, string c2);
+    void exportAlignment(string c1, string c2, alignment& alg);
     void iniciarlizarTablero(tablero& tab, unsigned int fsize, unsigned int csize, string c1, string c2);
     void imprimirTablero(tablero& tab, unsigned int fsize, unsigned int csize);
     void NeddlemanWunsch(tablero& tab, unsigned int fsize, unsigned int csize);

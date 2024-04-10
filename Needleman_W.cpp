@@ -5,9 +5,13 @@
 
 void Needleman_W::leerInputs(string& st1, string& st2, string file) {
     std::ifstream input(file);
-    std::getline(input, st1);
-    std::getline(input, st2);
-    input.close();
+    if(!input.is_open())
+        cout << "Error al leer input\n";
+    else{
+        std::getline(input, st1);
+        std::getline(input, st2);
+        input.close();
+    }
 }
 void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, unsigned int fsize, unsigned int csize) {
     //int size = std::max((int)fsize,(int)csize);
@@ -274,13 +278,17 @@ void Needleman_W::imprimirTablero(tablero& tab, unsigned int fsize, unsigned int
     std::cout << "\n";
 }
 
-void Needleman_W::calculate(string c1, string c2) {
+alignment Needleman_W::calculate(string c1, string c2) {
     auto fsize = c2.size() + 2;
     auto csize = c1.size() + 2;
     tablero tab1((csize) * (fsize + 2));
     iniciarlizarTablero(tab1, fsize, csize, c1, c2);
     NeddlemanWunsch(tab1, fsize, csize);
-    auto best = findBestAlignment(tab1, fsize, csize);
-    printPathsToFile(best);
-    printAlignmentsToFile(best, fsize, csize);
+    return findBestAlignment(tab1, fsize, csize);
+}
+
+void Needleman_W::exportAlignment(string c1, string c2, alignment & alg)
+{
+    printPathsToFile(alg);
+    printAlignmentsToFile(alg, c1.size()+2, c2.size()+2);
 }
