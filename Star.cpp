@@ -84,5 +84,4 @@ unsigned int Star::findRootAlignmentIndex(){
         if(sums[s] > sums[maxIndex]) maxIndex = s;
     }
     return maxIndex;
-
 }

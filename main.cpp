@@ -11,6 +11,10 @@ int main() {
     Star star;
     star.readStrings(forward, "../inputStar.txt");
     star.buildMatrix();
-    star.printMatrix();
+    int indice = star.findRootAlignmentIndex();
+    for(auto i : star.sums) cout << i << " ";
+    cout << "\n";
+    cout << "indice: " << indice << "\n";
+
 
 }
