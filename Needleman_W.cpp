@@ -1,3 +1,6 @@
+ï»¿//
+// Created by USER on 9/04/2024.
+//
 #include "Needleman_W.h"
 
 void Needleman_W::leerInputs(string& st1, string& st2, string file) {
@@ -32,7 +35,7 @@ void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, unsigned 
                     t2[indice] = c[1][0];
                 }
                 else
-                    cout << "Error. información de casilla indefinida\n";
+                    cout << "Error. informaciï¿½n de casilla indefinida\n";
                 indice--;
             }
             file << t << "\n";
@@ -74,68 +77,68 @@ void Needleman_W::printAlignmentsToFile(alignment& recorrido, unsigned int fsize
 alignment Needleman_W::findBestAlignment(tablero& tab, unsigned  int fsize, unsigned  int csize) {
     alignment  bestAlignment;
     auto temp = &(tab[csize * (fsize - 1) + csize - 1]); //inicio (inf. der.)
-    int score = 0;
+    int score = stoi(temp->valor);
     while (!(temp->left == nullptr && temp->top == nullptr && temp->diagonal == nullptr)) {
         if (temp->left != nullptr && temp->top == nullptr && temp->diagonal == nullptr) {
             bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "left" }); //x,y,v,dir
-            temp = temp->left; score += stoi(temp->left->valor);
+            temp = temp->left;
         }
         else if (temp->left == nullptr && temp->top != nullptr && temp->diagonal == nullptr) {
             bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" }); //x,y,v,dir
-            temp = temp->top; score += stoi(temp->top->valor);
+            temp = temp->top;
         }
-        else if (temp->left == nullptr && temp->top == nullptr && temp->diagonal != nullptr) {
+        else if (temp->left == nullptr && temp->top == nullptr && temp->diagonal) {
             bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "diagonal" }); //x,y,v,dir
-            temp = temp->diagonal; score += stoi(temp->diagonal->valor);
+            temp = temp->diagonal;
         }
         else if (temp->left != nullptr && temp->top != nullptr && temp->diagonal == nullptr) {
             if (std::stoi(temp->left->valor) > std::stoi(temp->top->valor)) {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "left" }); //x,y,v,dir
-                temp = temp->left; score += stoi(temp->left->valor);
+                temp = temp->left;
             }
             else {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" }); //x,y,v,dir
-                temp = temp->top; score += stoi(temp->top->valor);
+                temp = temp->top;
             }
         }
         else if (temp->left == nullptr && temp->top != nullptr && temp->diagonal != nullptr) {
             if (std::stoi(temp->diagonal->valor) > std::stoi(temp->top->valor)) {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "diagonal" }); //x,y,v,dir
-                temp = temp->diagonal; score += stoi(temp->diagonal->valor);
+                temp = temp->diagonal;
             }
             else {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" }); //x,y,v,dir
-                temp = temp->top; score += stoi(temp->top->valor);
+                temp = temp->top;
             }
         }
         else if (temp->left != nullptr && temp->top == nullptr && temp->diagonal != nullptr) {
             if (std::stoi(temp->left->valor) > std::stoi(temp->diagonal->valor)) {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "left" }); //x,y,v,dir
-                temp = temp->left; score += stoi(temp->left->valor);
+                temp = temp->left;
             }
             else {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "diagonal" }); //x,y,v,dir
-                temp = temp->diagonal; score += stoi(temp->diagonal->valor);
+                temp = temp->diagonal;
             }
         }
         else if (temp->left != nullptr && temp->top != nullptr && temp->diagonal != nullptr) {
             auto l = stoi(temp->left->valor), t = stoi(temp->top->valor), d = stoi(temp->diagonal->valor);
             if (max(max(l, t), d) == l) {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "left" }); //x,y,v,dir
-                temp = temp->left; score += l;
+                temp = temp->left;
             }
             else if (max(max(l, t), d) == t) {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" }); //x,y,v,dir
-                temp = temp->top; score += t;
+                temp = temp->top;
             }
             else {
                 bestAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "diagonal" }); //x,y,v,dir
-                temp = temp->diagonal; score += d;
+                temp = temp->diagonal;
             }
         }
     }
+    lastScore = score;
     return bestAlignment;
-
 }
 std::vector<alignment> Needleman_W::findAllAlingments(tablero& tab, unsigned int fsize, unsigned int csize, casilla* temp) {
     std::vector<alignment> alignments;
@@ -158,7 +161,7 @@ std::vector<alignment> Needleman_W::findAllAlingments(tablero& tab, unsigned int
         else if (temp->left != nullptr && temp->top != nullptr && temp->diagonal == nullptr) {
 
 
-            alignment newAlignment(firstAlignment);//Enviar camino alterno a función recursiva
+            alignment newAlignment(firstAlignment);//Enviar camino alterno a funciï¿½n recursiva
             newAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" });
             auto extraAlignments = findAllAlingments(tab, fsize, csize, temp->top);
             for (auto& i : extraAlignments)
@@ -169,7 +172,7 @@ std::vector<alignment> Needleman_W::findAllAlingments(tablero& tab, unsigned int
             temp = temp->left;
         }
         else if (temp->left == nullptr && temp->top != nullptr && temp->diagonal != nullptr) {
-            alignment newAlignment(firstAlignment);//Enviar camino alterno a función recursiva
+            alignment newAlignment(firstAlignment);//Enviar camino alterno a funciï¿½n recursiva
             newAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "top" });
 
             auto extraAlignments = findAllAlingments(tab, fsize, csize, temp->top);
@@ -181,7 +184,7 @@ std::vector<alignment> Needleman_W::findAllAlingments(tablero& tab, unsigned int
             temp = temp->diagonal;
         }
         else if (temp->left != nullptr && temp->top == nullptr && temp->diagonal != nullptr) {
-            alignment newAlignment(firstAlignment);//Enviar camino alterno a función recursiva
+            alignment newAlignment(firstAlignment);//Enviar camino alterno a funciï¿½n recursiva
             newAlignment.push_back({ string(1,temp->l),string(1,temp->t),temp->valor, "diagonal" });
 
             auto extraAlignments = findAllAlingments(tab, fsize, csize, temp->diagonal);
@@ -269,4 +272,15 @@ void Needleman_W::imprimirTablero(tablero& tab, unsigned int fsize, unsigned int
         std::cout << "\n";
     }
     std::cout << "\n";
+}
+
+void Needleman_W::calculate(string c1, string c2) {
+    auto fsize = c2.size() + 2;
+    auto csize = c1.size() + 2;
+    tablero tab1((csize) * (fsize + 2));
+    iniciarlizarTablero(tab1, fsize, csize, c1, c2);
+    NeddlemanWunsch(tab1, fsize, csize);
+    auto best = findBestAlignment(tab1, fsize, csize);
+    printPathsToFile(best);
+    printAlignmentsToFile(best, fsize, csize);
 }
