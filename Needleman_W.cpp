@@ -281,9 +281,10 @@ void Needleman_W::imprimirTablero(tablero& tab, unsigned int fsize, unsigned int
 alignment Needleman_W::calculate(string c1, string c2) {
     auto fsize = c2.size() + 2;
     auto csize = c1.size() + 2;
-    tablero tab1((csize) * (fsize + 2));
+    tablero tab1((csize) * (fsize ));
     iniciarlizarTablero(tab1, fsize, csize, c1, c2);
     NeddlemanWunsch(tab1, fsize, csize);
+    //imprimirTablero(tab1,fsize,csize);
     return findBestAlignment(tab1, fsize, csize);
 }
 

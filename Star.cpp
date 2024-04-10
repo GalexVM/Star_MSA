@@ -41,7 +41,7 @@ void Star::readStrings(ReadMode rm, string file){ //Reads and saves
         input.close();
         c = f = (int)cadenas.size();
         matrix = vector<Node>(c * f);
-        sums = vector<Node>(c);
+        sums = vector<int>(c,0);
         seq = std::move(cadenas);
     }
 }
@@ -72,4 +72,17 @@ void Star::printMatrix(){
             cout << matrix[c*i+j].value << "\t";
         }cout << "\n";
     }cout << "\n";
+}
+unsigned int Star::findRootAlignmentIndex(){
+    for(auto i = 0; i < f; i++){
+        for(auto j = 0; j < c; j++){
+            sums[i] += matrix[c*i+j].value;
+        }
+    }
+    int maxIndex = 0;
+    for(auto s = 1; s < sums.size(); s++){
+        if(sums[s] > sums[maxIndex]) maxIndex = s;
+    }
+    return maxIndex;
+
 }

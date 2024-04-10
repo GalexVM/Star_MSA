@@ -1,6 +1,7 @@
 #pragma once
 #include "Needleman_W.h"
 
+
 enum ReadMode{
     forward,
     inverse,
@@ -14,7 +15,7 @@ class Star {
         alignment alg;
     };
     vector<Node> matrix;
-    vector<Node> sums;
+    vector<int> sums;
     vector<string>seq;
     int f = 0, c = 0;
 
