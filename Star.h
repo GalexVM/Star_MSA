@@ -1,6 +1,6 @@
 #pragma once
 #include "Needleman_W.h"
-
+#include <algorithm>
 
 enum ReadMode{
     forward,

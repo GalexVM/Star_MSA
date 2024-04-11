@@ -1,5 +1,16 @@
 #include "Star.h"
 
+string generarcadenaopuesta(string cadena){
+    for(auto c : cadena){
+        if(c == 'T' || c == 't') c = 'A';
+        else if(c == 'A' || c == 'a') c = 'T';
+        else if(c == 'C' || c == 'c') c = 'G';
+        else if(c == 'G' || c == 'g') c = 'C';
+        else cout << "Error al generar cadena opuesta. Cadena no válida.\n";
+    }
+    return cadena;
+}
+
 void Star::readStrings(ReadMode rm, string file){ //Reads and saves
     std::ifstream input(file);
     vector<string> cadenas;
@@ -27,10 +38,18 @@ void Star::readStrings(ReadMode rm, string file){ //Reads and saves
             break;
         }
         case mix:
-            //TODO: inversión de cadenas
-            for(auto i = 0; i < 12; i++){
+            //Agarrar directos
+            for(auto i = 0; i < 6; i++){
                 string temp = ""; 
                 std::getline(input,temp);
+                cadenas.push_back(temp);
+            }
+            //Agarrar y transformar inversas
+            for(auto i = 0; i < 6; i++){
+                string temp = ""; 
+                std::getline(input,temp);
+                std::reverse(temp.begin(),temp.end());
+                temp = generarcadenaopuesta(temp);
                 cadenas.push_back(temp);
             }
             break;
