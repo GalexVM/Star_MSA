@@ -5,10 +5,12 @@ int main() {
 
 
     Star star;
-    star.readStrings(forward, "../inputStar.txt");
+    star.readStrings(forward, "../inputs/inputStar.txt");
     star.buildMatrix();
+    star.printMatrix();
     int indiceNodoCentral = star.findRootAlignmentIndex();
-    star.printAlignmentsToFile(indiceNodoCentral,"../star_alignments.txt");
+    cout << "la fila de la cadena central es: " << indiceNodoCentral << "\n";
+    star.printAlignmentsToFile(indiceNodoCentral,"../outputs/star_alignments.txt");
 
 
 }

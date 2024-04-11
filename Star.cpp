@@ -35,6 +35,14 @@ void Star::readStrings(ReadMode rm, string file){ //Reads and saves
             }
             break;
         
+        case all:
+            while(!input.eof()){
+                string temp = "";
+                std::getline(input,temp);
+                cadenas.push_back(temp);
+            }
+            break;
+        
         default: cout << "tipo de lectura incorrecta\n";
             break;
         }
@@ -93,7 +101,7 @@ void Star::printAlignmentsToFile(unsigned int index, string path){
     Needleman_W temp(1,-2,-1);
     temp.printAlignmentsToFile(algs, path);
     //Convert all alignments to the same size
-    std::ifstream input("../star_alignments.txt");
+    std::ifstream input(path);
     vector<string> strs;
     if(!input.is_open()) cout << "Error al abrir el archivo star_alignments para leer\n";
     else{
@@ -115,7 +123,7 @@ void Star::printAlignmentsToFile(unsigned int index, string path){
             a.push_back('-');
     }
     //Volver a escribir
-    std::ofstream output("../star_alignments.txt");
+    std::ofstream output(path);
     if(!output.is_open()) cout << "Error al abrir el archivo de star_alignments para escribir\n";
     else{
         for(auto& a : strs)

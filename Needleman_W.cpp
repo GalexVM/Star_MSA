@@ -53,7 +53,7 @@ void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, string pa
     
 }
 void Needleman_W::printPathsToFile(vector<alignment>& recorridos) {
-    std::ofstream file("recorridos.txt");
+    std::ofstream file("../outputs/recorridos.txt");
     if (!file.is_open()) {
         cout << "Error abriendo file de recorridos\n";
     }
@@ -296,5 +296,5 @@ alignment Needleman_W::calculate(string c1, string c2) {
 void Needleman_W::exportAlignment(string c1, string c2, alignment & alg)
 {
     printPathsToFile(alg);
-    printAlignmentsToFile(alg,"../alineaciones.txt");
+    printAlignmentsToFile(alg,"../outputs/alineaciones.txt");
 }

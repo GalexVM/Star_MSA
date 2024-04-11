@@ -5,7 +5,8 @@
 enum ReadMode{
     forward,
     inverse,
-    mix
+    mix,
+    all
 };
 
 class Star {
