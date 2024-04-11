@@ -38,9 +38,9 @@ public:
     std::vector<alignment> findAllAlingments(tablero& tab, unsigned int fsize, unsigned int csize, casilla* temp = nullptr);
     alignment findBestAlignment(tablero& tab, unsigned  int fsize, unsigned  int csize);
     void printPathsToFile(vector<alignment>& recorridos);
-    void printAlignmentsToFile(vector<alignment>& recorridos, unsigned int fsize, unsigned int csize);
+    void printAlignmentsToFile(vector<alignment>& recorridos, string path);
     void printPathsToFile(alignment& recorrido);
-    void printAlignmentsToFile(alignment& recorrido, unsigned int fsize, unsigned int csize);
+    void printAlignmentsToFile(alignment& recorrido, string path);
     void leerInputs(string& st1, string& st2, string file);
 };
 

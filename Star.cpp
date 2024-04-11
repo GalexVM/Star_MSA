@@ -85,3 +85,41 @@ unsigned int Star::findRootAlignmentIndex(){
     }
     return maxIndex;
 }
+void Star::printAlignmentsToFile(unsigned int index, string path){
+    /*The index is the best row*/
+    vector<alignment> algs = vector<alignment>(seq.size());
+    for(auto i = 0; i < seq.size(); i++)
+        algs[i] = matrix[c*index+i].alg;
+    Needleman_W temp(1,-2,-1);
+    temp.printAlignmentsToFile(algs, path);
+    //Convert all alignments to the same size
+    std::ifstream input("../star_alignments.txt");
+    vector<string> strs;
+    if(!input.is_open()) cout << "Error al abrir el archivo star_alignments para leer\n";
+    else{
+        while (!input.eof())
+        {
+            string temp;
+            std::getline(input,temp);
+            if(temp != "") strs.push_back(temp);
+        }
+    }
+    input.close();
+    int largestStringIndex = 0;
+    for(int i = 0; i < strs.size(); i++){
+        if(strs[i].size() > strs[largestStringIndex].size())
+            largestStringIndex = i;
+    }
+    for(auto& a : strs){
+        while (a.size() < strs[largestStringIndex].size())
+            a.push_back('-');
+    }
+    //Volver a escribir
+    std::ofstream output("../star_alignments.txt");
+    if(!output.is_open()) cout << "Error al abrir el archivo de star_alignments para escribir\n";
+    else{
+        for(auto& a : strs)
+            output << a << "\n";
+    }
+    output.close();
+}

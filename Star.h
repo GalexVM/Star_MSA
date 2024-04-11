@@ -23,6 +23,7 @@ class Star {
     void buildMatrix();
     void printMatrix();
     unsigned int findRootAlignmentIndex();
+    void printAlignmentsToFile(unsigned int index, string path);
 
 };
 

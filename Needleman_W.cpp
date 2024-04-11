@@ -13,15 +13,18 @@ void Needleman_W::leerInputs(string& st1, string& st2, string file) {
         input.close();
     }
 }
-void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, unsigned int fsize, unsigned int csize) {
+void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, string path) {
     //int size = std::max((int)fsize,(int)csize);
-    auto size = recorridos[0].size();
-    std::ofstream file("alineaciones.txt");
+    std::ofstream file(path);
     if (!file.is_open()) {
         cout << "Error abriendo file de alineaciones\n";
+        file.close();
     }
     else {
         for (auto& r : recorridos) {
+            auto size = r.size();
+            if(size == 0)
+                continue;
             string t(size, ' ');
             string t2(size, ' ');
             auto indice = size - 1;
@@ -39,14 +42,15 @@ void Needleman_W::printAlignmentsToFile(vector<alignment>& recorridos, unsigned 
                     t2[indice] = c[1][0];
                 }
                 else
-                    cout << "Error. informaci�n de casilla indefinida\n";
+                    cout << "Error. informacion de casilla indefinida\n";
                 indice--;
             }
             file << t << "\n";
-            file << t2 << "\n" << "\n";
+            file << t2 << "\n";
         }
+        file.close();
     }
-    file.close();
+    
 }
 void Needleman_W::printPathsToFile(vector<alignment>& recorridos) {
     std::ofstream file("recorridos.txt");
@@ -73,10 +77,10 @@ void Needleman_W::printPathsToFile(alignment& recorrido) {
     vec.push_back(recorrido);
     printPathsToFile(vec);
 }
-void Needleman_W::printAlignmentsToFile(alignment& recorrido, unsigned int fsize, unsigned int csize) {
+void Needleman_W::printAlignmentsToFile(alignment& recorrido, string path) {
     vector<alignment> vec;
     vec.push_back(recorrido);
-    printAlignmentsToFile(vec, fsize, csize);
+    printAlignmentsToFile(vec, path);
 }
 alignment Needleman_W::findBestAlignment(tablero& tab, unsigned  int fsize, unsigned  int csize) {
     alignment  bestAlignment;
@@ -279,6 +283,7 @@ void Needleman_W::imprimirTablero(tablero& tab, unsigned int fsize, unsigned int
 }
 
 alignment Needleman_W::calculate(string c1, string c2) {
+
     auto fsize = c2.size() + 2;
     auto csize = c1.size() + 2;
     tablero tab1((csize) * (fsize ));
@@ -291,5 +296,5 @@ alignment Needleman_W::calculate(string c1, string c2) {
 void Needleman_W::exportAlignment(string c1, string c2, alignment & alg)
 {
     printPathsToFile(alg);
-    printAlignmentsToFile(alg, c1.size()+2, c2.size()+2);
+    printAlignmentsToFile(alg,"../alineaciones.txt");
 }
